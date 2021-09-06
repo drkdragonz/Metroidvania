@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/herochar_attack_anim_strip_4(new).png-5f79063ac1d805d6753287901c76a786.stex"
+path="res://.import/herochar_jump_down_anim_strip_3.png-8164112007b6ecc459c586f442ef42eb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://herochar_attack_anim_strip_4(new).png"
-dest_files=[ "res://.import/herochar_attack_anim_strip_4(new).png-5f79063ac1d805d6753287901c76a786.stex" ]
+source_file="res://Art/herochar_jump_down_anim_strip_3.png"
+dest_files=[ "res://.import/herochar_jump_down_anim_strip_3.png-8164112007b6ecc459c586f442ef42eb.stex" ]
 
 [params]
 

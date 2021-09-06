@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/herochar_jump_down_anim_strip_3.png-b4b2d67d62f243525befe79d12a0e24e.stex"
+path="res://.import/herochar_idle_anim_strip_4.png-c52a3777d737e2f099fab0e0d96df188.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://herochar_jump_down_anim_strip_3.png"
-dest_files=[ "res://.import/herochar_jump_down_anim_strip_3.png-b4b2d67d62f243525befe79d12a0e24e.stex" ]
+source_file="res://Art/herochar_idle_anim_strip_4.png"
+dest_files=[ "res://.import/herochar_idle_anim_strip_4.png-c52a3777d737e2f099fab0e0d96df188.stex" ]
 
 [params]
 

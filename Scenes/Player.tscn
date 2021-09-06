@@ -1,10 +1,10 @@
 [gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://herochar_idle_anim_strip_4.png" type="Texture" id=2]
-[ext_resource path="res://herochar_run_anim_strip_6.png" type="Texture" id=3]
-[ext_resource path="res://herochar_sword_attack_anim_strip_4.png" type="Texture" id=4]
-[ext_resource path="res://herochar_jump_down_anim_strip_3.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Art/herochar_idle_anim_strip_4.png" type="Texture" id=2]
+[ext_resource path="res://Art/herochar_run_anim_strip_6.png" type="Texture" id=3]
+[ext_resource path="res://Art/herochar_sword_attack_anim_strip_4.png" type="Texture" id=4]
+[ext_resource path="res://Art/herochar_jump_down_anim_strip_3.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10.8975, 16 )
@@ -104,7 +104,6 @@ animations = [ {
 script = ExtResource( 1 )
 jump_force = 400
 _gravity = 20
-can_jump_start = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
