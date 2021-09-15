@@ -15,11 +15,18 @@ onready var animated_sprite = $AnimatedSprite
 var dashDirection = Vector2(1, 0)
 var canDash = false
 var dashing = false
- 
+
+var attacking = false
+
+export var Health = 3
+
 enum {
 	IDLE
 	RUN
 	AIR
+	ATTACK
+	STUNNED
+	DEATH
 }
  
 var _state: int = IDLE
@@ -30,7 +37,7 @@ func _ready():
 	print(can_jump)
  
 func _physics_process(delta):
-	print(_state)
+	#print(_state)
 	_velocity.x = move_direction().x * _speed
 	_velocity.y += _gravity
 	flip_sprite()
@@ -40,6 +47,8 @@ func _physics_process(delta):
 		_velocity.y = -jump_force
 		can_jump -= 1
 		change_state(AIR)
+	if Input.is_action_just_pressed("Attack"):
+		change_state(ATTACK)
 	
 	match _state:
 		IDLE:
@@ -47,7 +56,7 @@ func _physics_process(delta):
 			if is_on_floor() and _velocity.x:
 				change_state(RUN)
 			if is_on_floor():
-				can_jump = 3
+				can_jump = 2
 		RUN:
 			animated_sprite.play("Run")
 			if is_on_floor() and not _velocity.x:
@@ -57,6 +66,20 @@ func _physics_process(delta):
 			if is_on_floor() and _velocity.y > 0:
 				change_state(IDLE)
 				can_jump = can_jump_start
+		ATTACK:
+			attacking = true
+			if is_on_floor():
+				_velocity.x = 0
+			animated_sprite.play("Attack")
+			$Sword/CollisionShape2D.disabled = false
+			#then if the animation is finished and change the state back to idle
+		DEATH:
+			animated_sprite.play("Death")
+			yield(get_tree().create_timer(0.5), "timeout")
+			queue_free()
+			
+
+			
 	_velocity = move_and_slide(_velocity, _floor)
  
  
@@ -74,4 +97,25 @@ func flip_sprite() -> void:
 		animated_sprite.flip_h = true
 	if move_direction().x > 0:
 		animated_sprite.flip_h = false
- 
+		
+func _on_AnimatedSprite_animation_finished():
+	if attacking == true:
+		attacking = false
+		$Sword/CollisionShape2D.disabled = true
+		change_state(IDLE)
+
+func _on_HitBox_area_entered(area):
+	if area.is_in_group("Enemy"):
+		#print("hit")
+		Health -= 1 
+		$TempUi/CanvasLayer/Label.text = str(Health)
+		if Health < 1:
+			change_state(DEATH)
+			$TempUi/CanvasLayer/Label.text = str("Dead")
+	if area.is_in_group("Spike"):
+		#print("hit")
+		Health -= 3
+		$TempUi/CanvasLayer/Label.text = str(Health)
+		if Health < 1:
+			$TempUi/CanvasLayer/Label.text = str("Dead")
+			change_state(DEATH)
