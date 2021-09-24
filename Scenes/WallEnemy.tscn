@@ -46,29 +46,31 @@ extents = Vector2( 16.231, 16.4961 )
 [node name="WallEnemy" type="KinematicBody2D" groups=[
 "Enemy",
 ]]
-collision_layer = 0
-collision_mask = 20
+collision_layer = 2
+collision_mask = 2
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
 BULLET = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 8 )
 
 [node name="HurtBox" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 17
+collision_layer = 2
+collision_mask = 48
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 9 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-enabled = true
 cast_to = Vector2( 250, 0 )
 
 [node name="ReloadTimer" type="Timer" parent="RayCast2D"]
