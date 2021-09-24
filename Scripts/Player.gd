@@ -11,12 +11,15 @@ var can_jump = 2
 var _velocity = Vector2()
 var _floor = Vector2(0, -1)
 onready var animated_sprite = $AnimatedSprite
+
  
 var dashDirection = Vector2(1, 0)
 var canDash = false
 var dashing = false
 
 var attacking = false
+var can_shoot = true
+const SHURIKEN = preload("res://Scenes/Shuriken.tscn")
 
 export var Health = 3
 
@@ -25,7 +28,7 @@ enum {
 	RUN
 	AIR
 	ATTACK
-	STUNNED
+	SHOOT
 	DEATH
 }
  
@@ -49,6 +52,8 @@ func _physics_process(delta):
 		change_state(AIR)
 	if Input.is_action_just_pressed("Attack"):
 		change_state(ATTACK)
+	if Input.is_action_just_pressed("Shoot"):
+		change_state(SHOOT)
 	
 	match _state:
 		IDLE:
@@ -56,7 +61,7 @@ func _physics_process(delta):
 			if is_on_floor() and _velocity.x:
 				change_state(RUN)
 			if is_on_floor():
-				can_jump = 2
+				can_jump = 3
 		RUN:
 			animated_sprite.play("Run")
 			if is_on_floor() and not _velocity.x:
@@ -73,10 +78,20 @@ func _physics_process(delta):
 			animated_sprite.play("Attack")
 			$Sword/CollisionShape2D.disabled = false
 			#then if the animation is finished and change the state back to idle
+		SHOOT:
+			pass
+			var shuriken = SHURIKEN.instance()
+			if sign($Position2D.position.x) == 1:
+				shuriken.set_direction(1)
+			else:
+				shuriken.set_direction(-1)
+			get_parent().add_child(shuriken)
+			shuriken.position = $Position2D.global_position
+			change_state(IDLE)
 		DEATH:
 			animated_sprite.play("Death")
 			yield(get_tree().create_timer(0.5), "timeout")
-			queue_free()
+			get_tree().reload_current_scene()
 			
 
 			
@@ -95,9 +110,12 @@ func flip_sprite() -> void:
 	var animated_sprite = $AnimatedSprite
 	if move_direction().x < 0:
 		animated_sprite.flip_h = true
+		if sign($Position2D.position.x) == 1:
+			$Position2D.position.x *= -1
 	if move_direction().x > 0:
 		animated_sprite.flip_h = false
-		
+		if sign($Position2D.position.x) == -1:
+			$Position2D.position.x *= -1
 func _on_AnimatedSprite_animation_finished():
 	if attacking == true:
 		attacking = false
