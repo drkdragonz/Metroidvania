@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Menu.gd" type="Script" id=1]
+[ext_resource path="res://Art/BG/Mushroom_Cave_L2.png" type="Texture" id=4]
 
 [node name="StartMenu" type="Control"]
 anchor_right = 1.0
@@ -13,17 +14,32 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 640.0
 margin_bottom = 360.0
-color = Color( 0.117647, 0.141176, 0.388235, 1 )
+color = Color( 0.215515, 0.303047, 0.515625, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite3" type="Sprite" parent="."]
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 4 )
+centered = false
+
 [node name="Button" type="Button" parent="."]
 margin_left = 224.0
-margin_top = 192.0
+margin_top = 256.0
 margin_right = 416.0
-margin_bottom = 256.0
+margin_bottom = 320.0
 text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 104.0
+margin_right = 640.0
+margin_bottom = 272.0
+text = "Unamed Metroidvania"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -60,7 +60,7 @@ func MovementLoop(delta):
 	
 func _on_HurtBox_area_entered(area):
 	if area.is_in_group("Sword"):
-		#print("Sword Enterd")
+		
 		queue_free()
 
 

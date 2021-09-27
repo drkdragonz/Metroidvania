@@ -57,11 +57,19 @@ BULLET = ExtResource( 3 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 8 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 250, 0 )
+
+[node name="ReloadTimer" type="Timer" parent="RayCast2D"]
+process_mode = 0
+wait_time = 2.0
+one_shot = true
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 2
@@ -70,19 +78,11 @@ collision_mask = 48
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 9 )
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-cast_to = Vector2( 250, 0 )
-
-[node name="ReloadTimer" type="Timer" parent="RayCast2D"]
-process_mode = 0
-wait_time = 2.0
-one_shot = true
-
 [node name="Light2D" type="Light2D" parent="."]
 texture = ExtResource( 4 )
 texture_scale = 0.5
 energy = 0.8
 shadow_enabled = true
 
-[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="timeout" from="RayCast2D/ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]

@@ -22,11 +22,15 @@ var can_shoot = true
 const SHURIKEN = preload("res://Scenes/Shuriken.tscn")
 
 export var Health = 3
+var repulsion = Vector2()
+var knock_force = 1000
+
 
 enum {
 	IDLE
 	RUN
 	AIR
+	KNOCKBACK
 	ATTACK
 	SHOOT
 	DEATH
@@ -71,6 +75,8 @@ func _physics_process(delta):
 			if is_on_floor() and _velocity.y > 0:
 				change_state(IDLE)
 				can_jump = can_jump_start
+		KNOCKBACK:
+			change_state(IDLE)
 		ATTACK:
 			attacking = true
 			if is_on_floor():
@@ -96,7 +102,6 @@ func _physics_process(delta):
 
 			
 	_velocity = move_and_slide(_velocity, _floor)
- 
  
 func move_direction() -> Vector2:
 	return Vector2(
@@ -127,6 +132,7 @@ func _on_HitBox_area_entered(area):
 		#print("hit")
 		Health -= 1 
 		$TempUi/CanvasLayer/Label.text = str(Health)
+		change_state(KNOCKBACK)
 		if Health < 1:
 			change_state(DEATH)
 			$TempUi/CanvasLayer/Label.text = str("Dead")
