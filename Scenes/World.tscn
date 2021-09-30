@@ -333,13 +333,13 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 } ]
 0/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=49]
+extents = Vector2( 99.5275, 0.999512 )
+
 [sub_resource type="RectangleShape2D" id=50]
-extents = Vector2( 99.5275, 3.82648 )
+extents = Vector2( 99.5275, 0.757721 )
 
-[sub_resource type="RectangleShape2D" id=51]
-extents = Vector2( 99.5275, 3.97699 )
-
-[sub_resource type="Curve2D" id=49]
+[sub_resource type="Curve2D" id=51]
 _data = {
 "points": PoolVector2Array( -62.0961, -10.3494, 62.0961, 10.3494, 1449.8, 132.675, -13.0815, -21.9203, 13.0815, 21.9203, 1452.46, 189.406, 0, 0, 0, 0, 1452.94, 232.793, 54.0937, -14.4957, -54.0937, 14.4957, 1327.66, 230.786, 21.2132, 19.0919, -21.2132, -19.0919, 1205.52, 229.451, -11.3137, 15.9099, 11.3137, -15.9099, 1206.19, 178.06, -83.2448, 25.6484, 83.2448, -25.6484, 1288.87, 91.7084, 0, 0, 0, 0, 1449.8, 132.675 )
 }
@@ -378,10 +378,10 @@ tile_data = PoolIntArray( -720897, 0, 65537, -786432, 0, 65537, -786431, 0, 6553
 [node name="ParallaxBackground" type="ParallaxBackground" parent="LevelArt"]
 
 [node name="ColorRect" type="ColorRect" parent="LevelArt/ParallaxBackground"]
-margin_left = -35.63
-margin_top = -17.0
-margin_right = 1768.37
-margin_bottom = 705.0
+margin_left = -35.4813
+margin_top = -17.2973
+margin_right = 1768.52
+margin_bottom = 704.703
 color = Color( 0.21759, 0.285149, 0.449219, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -415,7 +415,7 @@ texture = ExtResource( 7 )
 centered = false
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 27.5396, 175.767 )
+position = Vector2( 56.4938, 278.22 )
 collision_mask = 6
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -455,6 +455,15 @@ position = Vector2( 421, 8 )
 [node name="FallingSpike3" parent="Stuffs" instance=ExtResource( 4 )]
 position = Vector2( 442, 8 )
 
+[node name="FallingSpike7" parent="Stuffs" instance=ExtResource( 4 )]
+position = Vector2( 608, 424 )
+
+[node name="FallingSpike8" parent="Stuffs" instance=ExtResource( 4 )]
+position = Vector2( 648, 424 )
+
+[node name="FallingSpike9" parent="Stuffs" instance=ExtResource( 4 )]
+position = Vector2( 688, 424 )
+
 [node name="FallingSpike4" parent="Stuffs" instance=ExtResource( 4 )]
 position = Vector2( 638, 8 )
 
@@ -468,15 +477,15 @@ position = Vector2( 680, 8 )
 position = Vector2( 1612, 358 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stuffs/Area2D"]
-position = Vector2( 3.48938, -2.57529 )
-shape = SubResource( 50 )
+position = Vector2( 3.35742, -8.80039 )
+shape = SubResource( 49 )
 
 [node name="Area2D2" type="Area2D" parent="Stuffs"]
 position = Vector2( 1612, 358 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stuffs/Area2D2"]
-position = Vector2( 3.57922, 8.11688 )
-shape = SubResource( 51 )
+position = Vector2( 3.57922, 15.1793 )
+shape = SubResource( 50 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -499,7 +508,7 @@ position = Vector2( 846.938, 122.979 )
 position = Vector2( 1656, 272 )
 
 [node name="Path2D" type="Path2D" parent="Enemies"]
-curve = SubResource( 49 )
+curve = SubResource( 51 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Enemies/Path2D"]
 position = Vector2( 1449.8, 132.675 )
@@ -511,20 +520,20 @@ position = Vector2( 0.380737, -0.092804 )
 [node name="Path2D3" type="Path2D" parent="Enemies"]
 position = Vector2( -340.715, 410.001 )
 scale = Vector2( 0.73857, 0.69989 )
-curve = SubResource( 49 )
+curve = SubResource( 51 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Enemies/Path2D3"]
 position = Vector2( 1449.8, 132.675 )
 rotate = false
 
 [node name="WallEnemy3" parent="Enemies/Path2D3/PathFollow2D" instance=ExtResource( 5 )]
-position = Vector2( 0.228516, -0.00244141 )
+position = Vector2( -0.00494385, 0.198364 )
 scale = Vector2( 1.42857, 1.42858 )
 
 [node name="Path2D2" type="Path2D" parent="Enemies"]
 position = Vector2( 298.887, -17.3538 )
 scale = Vector2( 0.295726, 1.06446 )
-curve = SubResource( 49 )
+curve = SubResource( 51 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Enemies/Path2D2"]
 position = Vector2( 1449.8, 132.675 )

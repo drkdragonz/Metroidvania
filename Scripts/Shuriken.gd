@@ -21,7 +21,7 @@ func _on_Timer_timeout():
 
 
 func _on_Area2D_area_entered(area):
-	print("hi")
+	#print("hi")
 	speed = 0
 	$AnimationPlayer.play("degrage")
 	yield(get_tree().create_timer(0.5), "timeout")
@@ -29,7 +29,7 @@ func _on_Area2D_area_entered(area):
 	
 
 func _on_Area2D_body_entered(body):
-	print("hi")
+	#print("hi")
 	speed = 0
 	$AnimationPlayer.play("degrage")
 	yield(get_tree().create_timer(0.5), "timeout")

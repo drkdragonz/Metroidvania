@@ -21,19 +21,20 @@ var attacking = false
 var can_shoot = true
 const SHURIKEN = preload("res://Scenes/Shuriken.tscn")
 
-export var Health = 3
-var repulsion = Vector2()
-var knock_force = 1000
+export var Health = 30
+var knockback = 1000
+var player_pos = null
+var enemy_pos = null
 
 
 enum {
 	IDLE
 	RUN
 	AIR
-	KNOCKBACK
 	ATTACK
 	SHOOT
 	DEATH
+	KNOCKBACK
 }
  
 var _state: int = IDLE
@@ -61,6 +62,7 @@ func _physics_process(delta):
 	
 	match _state:
 		IDLE:
+			$HitBox/CollisionShape2D.disabled = false
 			animated_sprite.play("Idle")
 			if is_on_floor() and _velocity.x:
 				change_state(RUN)
@@ -76,6 +78,14 @@ func _physics_process(delta):
 				change_state(IDLE)
 				can_jump = can_jump_start
 		KNOCKBACK:
+			player_pos = global_position
+			print(enemy_pos)
+			print(player_pos)
+			_velocity = 0
+			_velocity = (player_pos - enemy_pos).normalized() * knockback
+			$AnimationPlayer.play("Flash")
+			$HitBox/CollisionShape2D.disabled = true
+			yield(get_tree().create_timer(0.1), "timeout")
 			change_state(IDLE)
 		ATTACK:
 			attacking = true
@@ -96,12 +106,13 @@ func _physics_process(delta):
 			change_state(IDLE)
 		DEATH:
 			animated_sprite.play("Death")
-			yield(get_tree().create_timer(0.5), "timeout")
+			yield(get_tree().create_timer(1.2), "timeout")
 			get_tree().reload_current_scene()
 			
 
 			
 	_velocity = move_and_slide(_velocity, _floor)
+ 
  
 func move_direction() -> Vector2:
 	return Vector2(
@@ -129,6 +140,7 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_HitBox_area_entered(area):
 	if area.is_in_group("Enemy"):
+		enemy_pos = (area.get_parent()).get_global_position()
 		#print("hit")
 		Health -= 1 
 		$TempUi/CanvasLayer/Label.text = str(Health)
@@ -136,9 +148,9 @@ func _on_HitBox_area_entered(area):
 		if Health < 1:
 			change_state(DEATH)
 			$TempUi/CanvasLayer/Label.text = str("Dead")
-	if area.is_in_group("Spike"):
+	if area.is_in_group("Projectile"):
 		#print("hit")
-		Health -= 3
+		Health -= 1
 		$TempUi/CanvasLayer/Label.text = str(Health)
 		if Health < 1:
 			$TempUi/CanvasLayer/Label.text = str("Dead")

@@ -35,10 +35,10 @@ tracks/0/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 9.67664
+radius = 6.42911
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 10.9625
+radius = 7.57345
 
 [node name="Shuriken" type="Area2D" groups=[
 "Sword",

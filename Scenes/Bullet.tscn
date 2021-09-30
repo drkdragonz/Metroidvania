@@ -41,7 +41,7 @@ radius = 8.78528
 radius = 11.0437
 
 [node name="Bullet" type="Area2D" groups=[
-"Enemy",
+"Projectile",
 ]]
 collision_mask = 5
 script = ExtResource( 1 )
