@@ -8,7 +8,7 @@ export var can_jump_start = 3
  
 var can_jump = 2
  
-var _velocity = Vector2()
+var _velocity = Vector2.ZERO
 var _floor = Vector2(0, -1)
 onready var animated_sprite = $AnimatedSprite
 
@@ -21,8 +21,8 @@ var attacking = false
 var can_shoot = true
 const SHURIKEN = preload("res://Scenes/Shuriken.tscn")
 
-export var Health = 30
-var knockback = 1000
+export var Health = 5
+var knockback = 700
 var player_pos = null
 var enemy_pos = null
 
@@ -45,6 +45,7 @@ func _ready():
 	print(can_jump)
  
 func _physics_process(delta):
+	#print(_velocity)
 	#print(_state)
 	_velocity.x = move_direction().x * _speed
 	_velocity.y += _gravity
@@ -62,7 +63,6 @@ func _physics_process(delta):
 	
 	match _state:
 		IDLE:
-			$HitBox/CollisionShape2D.disabled = false
 			animated_sprite.play("Idle")
 			if is_on_floor() and _velocity.x:
 				change_state(RUN)
@@ -79,13 +79,15 @@ func _physics_process(delta):
 				can_jump = can_jump_start
 		KNOCKBACK:
 			player_pos = global_position
-			print(enemy_pos)
-			print(player_pos)
+			#print(enemy_pos)
+			#print(player_pos)
 			_velocity = 0
-			_velocity = (player_pos - enemy_pos).normalized() * knockback
-			$AnimationPlayer.play("Flash")
+			_velocity = (player_pos - enemy_pos).normalized() * knockback 
+			#print(_velocity)
+			#print("knockback")
 			$HitBox/CollisionShape2D.disabled = true
-			yield(get_tree().create_timer(0.1), "timeout")
+			$AnimationPlayer.play("Flash")
+			$Timer.start()
 			change_state(IDLE)
 		ATTACK:
 			attacking = true
@@ -152,6 +154,13 @@ func _on_HitBox_area_entered(area):
 		#print("hit")
 		Health -= 1
 		$TempUi/CanvasLayer/Label.text = str(Health)
+		$AnimationPlayer.play("Flash")
+		$HitBox/CollisionShape2D.disabled = true
+		$Timer.start()
 		if Health < 1:
 			$TempUi/CanvasLayer/Label.text = str("Dead")
 			change_state(DEATH)
+
+
+func _on_Timer_timeout():
+	$HitBox/CollisionShape2D.disabled = false
